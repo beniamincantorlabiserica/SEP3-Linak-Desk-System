@@ -7,6 +7,8 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;  // Add this line
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserInfoController;
+use App\Http\Controllers\DeskUsageController;
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -32,9 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
+
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');  // Add this line
-    
+
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 });
@@ -46,3 +48,11 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::post('/user/add', [UserInfoController::class, 'addUserInfo']);
+    Route::get('/user/get', [UserInfoController::class, 'getUserInfo']);
+
+    Route::post('/desk/add', [DeskUsageController::class, 'addDeskUsage']);
+    Route::get('/desk/get', [DeskUsageController::class, 'getDeskUsage']);
+});
