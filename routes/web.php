@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;  // Add this line
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DeskController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -26,7 +27,14 @@ Route::middleware('guest')->group(function () {
         ->name('password.reset');
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
-});
+
+    Route::get('test_api', [DeskController::class, 'test'])
+        ->name('test')->middleware(['auth']);
+    
+        Route::get('test_api/post', [DeskController::class, 'test_post'])
+        ->name('post');
+    
+    });
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
