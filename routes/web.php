@@ -27,13 +27,6 @@ Route::middleware('guest')->group(function () {
         ->name('password.reset');
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
-
-    Route::get('test_api', [DeskController::class, 'test'])
-        ->name('test')->middleware(['auth']);
-    
-        Route::get('test_api/post', [DeskController::class, 'test_post'])
-        ->name('post');
-    
     });
 
 Route::middleware('auth')->group(function () {
@@ -45,6 +38,9 @@ Route::middleware('auth')->group(function () {
     
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+
+    
+    
 });
 
 Route::get('/', function () {
@@ -54,3 +50,14 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+/* dev, switch to auth */
+
+Route::get('desk_api/index', [DeskController::class, 'index'])
+        ->name('desk.index');
+    
+    Route::get('desk_api/{id}', [DeskController::class, 'show'])
+        ->name('desk.show');
+        
+    Route::get('desk_api/update/{id}', [DeskController::class, 'update'])
+        ->name('desk.update');

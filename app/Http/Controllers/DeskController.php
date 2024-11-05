@@ -9,69 +9,30 @@ use Illuminate\Http\Request;
 
 class DeskController extends Controller
 {
-
-    $api_key = "test";
-    $version = "v1";
     
     /* get all desks */ 
-    public function desks()
+    public function index()
 {
-    /*
-    $response = Http::withHeaders([
-        'Content-Type' => 'application/json',
-    ])->post('https://reqres.in/api/users', [
-        'name' => 'George',
-    ]);
-    */
+    $response = Http::get('http://127.0.0.1:8001/api/' . env('DESK_API_VERSION') . '/' . env('DESK_API_KEY') . '/desks');
 
-    $response = Http::acceptJson()->get('http://127.0.0.1:800/api/' . $version . '/' . $api_key . '/desks');
-
-    return $response;
+    return $response->json();
 }
 
-public function get_desk(Request $request)
+public function show(Request $request, string $id)
 {
     
-
-    $response = Http::get('https://reqres.in/api/users', [
-        'desk_id' => $request->input('deskid'),
-    ]);
+    $response = Http::get('http://127.0.0.1:8001/api/' . env('DESK_API_VERSION') . '/' . env('DESK_API_KEY') . '/desks' . '/' . $id);
 
     return $response;
 }
 
-    public function test()
+
+    public function update(Request $request, string $id, int $position)
 {
-    /*
-    $response = Http::withHeaders([
-        'Content-Type' => 'application/json',
-    ])->post('https://reqres.in/api/users', [
-        'name' => 'George',
-    ]);
-    */
-
-    $response = Http::acceptJson()->get('https://reqres.in/api/users');
-
-    return $response;
-}
-
-public function test_post()
-{
-    /*
-    $response = Http::withHeaders([
-        'Content-Type' => 'application/json',
-    ])->post('https://reqres.in/api/users', [
-        'name' => 'George',
-    ]);
-    */
-
-    $response = Http::post('https://reqres.in/api/users', [
-        'name' => 'Steve',
-        'job' => 'Network Administrator',
-    ]);
-
     
+    $response = Http::post('http://127.0.0.1:8000/api/' . env('DESK_API_VERSION') . '/' . env('DESK_API_KEY') . '/desks' . '/' . $id . '/' . $position);
 
-    return $response->status();
+    return $response;
 }
+
 }
