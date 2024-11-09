@@ -53,11 +53,11 @@ Route::get('/dashboard', function () {
 
 /* dev, switch to auth */
 
-Route::get('desk_api/index', [DeskController::class, 'index'])
+Route::get('desk_api', [DeskController::class, 'index'])
         ->name('desk.index');
     
-    Route::get('desk_api/{id}', [DeskController::class, 'show'])
+Route::get('desk_api/{id}', [DeskController::class, 'show'])
         ->name('desk.show');
         
-    Route::get('desk_api/update/{id}', [DeskController::class, 'update'])
+Route::get('desk_api/update/{id}/{position}', [DeskController::class, 'update'])
         ->name('desk.update');
