@@ -58,6 +58,9 @@ Route::get('desk_api', [DeskController::class, 'index'])
     
 Route::get('desk_api/{id}', [DeskController::class, 'show'])
         ->name('desk.show');
+
+Route::get('desk_api/{id}/{category}', [DeskController::class, 'show_category'])
+        ->name('desk.show');
         
-Route::get('desk_api/update/{id}/{position}', [DeskController::class, 'update'])
+Route::put('desk_api/update/{id}/{category}', [DeskController::class, 'update_category'])
         ->name('desk.update');
