@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;  // Add this line
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DeskController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -26,7 +27,7 @@ Route::middleware('guest')->group(function () {
         ->name('password.reset');
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
-});
+    });
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -37,6 +38,9 @@ Route::middleware('auth')->group(function () {
     
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+
+    
+    
 });
 
 Route::get('/', function () {
@@ -46,3 +50,14 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+/* dev, switch to auth */
+
+Route::get('desk_api', [DeskController::class, 'index'])
+        ->name('desk.index');
+    
+Route::get('desk_api/{id}', [DeskController::class, 'show'])
+        ->name('desk.show');
+        
+Route::get('desk_api/update/{id}/{position}', [DeskController::class, 'update'])
+        ->name('desk.update');
