@@ -35,26 +35,22 @@ public function show_category(Request $request, string $id, string $category)
 }
 
 
-    public function update_category(Request $request, string $id, string $category)
+public function update_category(Request $request, string $id, string $category, string $opt, int $val)
 {
     
-    //$response = Http::put(env('DESK_API_ENDPOINT') .  env('DESK_API_VERSION') . '/' . env('DESK_API_KEY') . '/desks' . '/' . $id . '/' . $category);
-
-    $data = [
-            "position_mm" => 1111
-          
-      ];
-
-    //$response = Http::put(env('DESK_API_ENDPOINT') .  env('DESK_API_VERSION') . '/' . env('DESK_API_KEY') . '/desks' . '/' . $id . '/' . $category);
+    if($opt == "position_mm")
+    {
     
-    $client = new Client();
+        $data = [
+            "position_mm" => $val
+          
+        ];
+    }else
+    {
+        $data = [  ];
+    }
 
-    $res = $client -> request('PUT', env('DESK_API_ENDPOINT') .  env('DESK_API_VERSION') . '/' . env('DESK_API_KEY') . '/desks' . '/' . $id . '/' . $category, [
-        'position_mm' => 10001
-    ]);
-
-    echo($res->getStatusCode());
-
+    $response = Http::withBody(json_encode($data), 'application/json')->put(env('DESK_API_ENDPOINT') .  env('DESK_API_VERSION') . '/' . env('DESK_API_KEY') . '/desks' . '/' . $id . '/' . $category);
     return $response->json();
 }
 
